@@ -10,7 +10,7 @@ public class Client {
     public Client(String nom) {
         this.nom = nom;
         this.comptes = new Compte[100];
-        this.nbrCompte = -1;
+        this.nbrCompte = 0;
         this.ajouterCompte(new Compte(UUID.randomUUID().toString(), 150f));
     }
 
@@ -18,9 +18,17 @@ public class Client {
         return this.nom;
     }
 
+    public Compte[] getComptes() {
+        return comptes;
+    }
+
+    public int getNbrCompte() {
+        return nbrCompte;
+    }
+
     public void ajouterCompte(Compte compte) {
-        this.nbrCompte+=1;
         this.comptes[nbrCompte] = compte;
+        this.nbrCompte+=1;
     }
 
     public float getSolde() {
@@ -29,10 +37,6 @@ public class Client {
             value += this.comptes[i].getSolde();
         }
         return value;
-    }
-
-    public void afficherSolde() {
-        System.out.println("Solde total : " + this.getSolde());
     }
 
     //TODO renflour

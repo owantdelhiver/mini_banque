@@ -27,10 +27,4 @@ public class Banque {
         this.clients[this.nbrClient] = client;
         this.nbrClient++;
     }
-
-    public void bilanClient() {
-        System.out.println("bilan client");
-    }
-
-
 }
