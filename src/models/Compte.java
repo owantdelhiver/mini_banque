@@ -21,10 +21,6 @@ public class Compte {
         return solde;
     }
 
-    public void afficherSolde() {
-        System.out.println(this.solde);
-    }
-
     public void virement(float value, Compte compte) {
         this.retrait(value);
         compte.depot(value);
