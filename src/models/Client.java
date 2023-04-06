@@ -1,16 +1,17 @@
 package models;
 
+import java.util.UUID;
+
 public class Client {
     private String nom;
     public Compte[] comptes;
     private int nbrCompte;
-    private int compteCourant;
 
     public Client(String nom) {
         this.nom = nom;
         this.comptes = new Compte[100];
         this.nbrCompte = -1;
-        this.compteCourant = 0;
+        this.ajouterCompte(new Compte(UUID.randomUUID().toString(), 150f));
     }
 
     public String getNom() {
@@ -34,14 +35,15 @@ public class Client {
         System.out.println("Solde total : " + this.getSolde());
     }
 
-    public void renflouer() {
-        int compteur = 1;
-        while (this.comptes[this.compteCourant].getSolde() < 0) {
-            if(this.comptes[compteur].getSolde() < Math.abs(this.comptes[this.compteCourant].getSolde())) {
-
-            } else {
-                this.comptes[compteur].virement(Math.abs(this.comptes[this.compteCourant].getSolde()), this.comptes[this.compteCourant]);
-            }
-        }
-    }
+    //TODO renflour
+//    public void renflouer() {
+//        int compteur = 1;
+//        while (this.comptes[0].getSolde() < 0) {
+//            if(this.comptes[compteur].getSolde() < Math.abs(this.comptes[0].getSolde())) {
+//
+//            } else {
+//                this.comptes[compteur].virement(Math.abs(this.comptes[0].getSolde()), this.comptes[0]);
+//            }
+//        }
+//    }
 }

@@ -1,10 +1,10 @@
 package models;
 
 public class Compte {
-    private int numero;
+    private String numero;
     private float solde;
 
-    public Compte(int numero, float solde) {
+    public Compte(String numero, float solde) {
         this.numero = numero;
         this.solde = solde;
     }
@@ -30,7 +30,7 @@ public class Compte {
         compte.depot(value);
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 }

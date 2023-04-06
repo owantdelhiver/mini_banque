@@ -1,45 +1,84 @@
 package models;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.Scanner;
 
 public class BanqueInteraction {
     private Banque banque;
-
-    public String[][] interactionPrincipal;
-    public String[][] interactionClient;
+    private Scanner scanner;
 
     public BanqueInteraction() {
-        this.banque = new Banque("ma banque");
-        //Interaction Principale
-        this.interactionPrincipal = new String[1][2];
-
-        this.interactionPrincipal[0][0] = "Ajouter un client";
-        this.interactionPrincipal[0][1] = "ajouterClient";
-
-
-        //Client
-        this.interactionClient = new String[1][2];
-        this.interactionClient[0][0] = "Afficher le bilan";
-        this.interactionClient[0][1] = "bilanClient";
+        this.banque = new Banque("Ma banque");
+        this.scanner  = new Scanner(System.in);
     }
-    public void displayMenu(String[][] interactions) {
-        this.callMethod(this.banque,"bilanClient");
-        this.callMethod(this.banque,"ajouterClient");
-    }
+    public void displayMenuPrincipal() {
+        String[] menu = new String[4];
+        menu[0] = "Quitter";
+        menu[1] = "Ajouter un client";
+        menu[2] = "Effectuer une opération client";
+        menu[3] = "Afficher un bilan général";
 
-    public void callMethod(Object object, String method) {
-        try {
-            object.getClass().getMethod(method).invoke(object);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+        System.out.println("--- Menu principale ---");
+        for (int i = 0; i < menu.length; i++) {
+            System.out.println(i + "- " + menu[i]);
+        }
+
+        System.out.print("- ");
+        String choix = this.scanner.next();
+
+        switch (choix) {
+            case "0" -> System.out.println("bisous");
+            case "1" -> ajouterClient();
+            case "2" -> choixClient();
+            default -> displayMenuPrincipal();
+        }
+
+    }
+    private void ajouterClient() {
+        System.out.println("--- Ajout d'un nouveau client ---");
+        System.out.println("Entrer son nom");
+        System.out.print("- ");
+        String name = this.scanner.next();
+        this.banque.ajouterClient(new Client(name));
+        displayMenuPrincipal();
+    }
+    private void interactionClient(Client client) {
+        System.out.println("--- Compte de " + client.getNom() + " ---");
+        String[] menu = new String[4];
+        menu[0] = "Quitter";
+        menu[1] = "Afficher un bilan";
+        menu[2] = "Faire un depot";
+        menu[3] = "Afficher un bilan général";
+
+        for (int i = 0; i < menu.length; i++) {
+            System.out.println(i + " - " + menu[i]);
+        }
+
+        System.out.print("- ");
+        String choix = this.scanner.next();
+
+        switch (choix) {
+            case "0" -> displayMenuPrincipal();
+            default -> interactionClient(client);
         }
     }
+    private void choixClient() {
+        System.out.println("--- Choix du client ---");
+        System.out.println("0 - Quitter");
+        for (int i = 0; i < this.banque.getNbrClient(); i++) {
+            System.out.println((i+1) + " - " + this.banque.getClients()[i].getNom());
+        }
+        int idClient = this.scanner.nextInt();
 
-    public void ajouterClient() {
-        System.out.println("ajouter un client (banque interaction)");
-//        System.out.println("quel est le nom du client");
-//        String name = "toto";
-//        this.banque.ajouterClient(new Client(name));
+        if(idClient == 0) {
+            displayMenuPrincipal();
+        } else if (MyMath.isBetween(idClient, 1, this.banque.getNbrClient())) {
+            interactionClient(this.banque.getClients()[idClient-1]);
+        } else {
+            choixClient();
+        }
+    }
+    //TODO Return Account from client
+    private void choixCompte(Client client) {
+
     }
 }

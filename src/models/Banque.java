@@ -8,11 +8,15 @@ public class Banque {
     public Banque(String name) {
         this.name = name;
         this.clients = new Client[1000];
-        this.nbrClient = -1;
+        this.nbrClient = 0;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getNbrClient() {
+        return nbrClient;
     }
 
     public Client[] getClients() {
@@ -20,12 +24,13 @@ public class Banque {
     }
 
     public void ajouterClient(Client client) {
-        System.out.println("ajouter client (banque)");
-//        this.nbrClient++;
-//        this.clients[this.nbrClient] = client;
+        this.clients[this.nbrClient] = client;
+        this.nbrClient++;
     }
 
     public void bilanClient() {
         System.out.println("bilan client");
     }
+
+
 }
